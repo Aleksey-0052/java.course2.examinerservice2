@@ -1,6 +1,5 @@
 package pro.sky.java.course2.examinerservice2.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,14 +10,9 @@ import pro.sky.java.course2.examinerservice2.exceptions.QuestionAlreadyAddedExce
 import pro.sky.java.course2.examinerservice2.exceptions.QuestionNotFoundException;
 import pro.sky.java.course2.examinerservice2.repository.QuestionRepository;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 import static pro.sky.java.course2.examinerservice2.constants.QuestionsConstants.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,7 +30,7 @@ class JavaQuestionServiceTest {
         when(repositoryMock.add(javaQuest1))
                 .thenReturn(javaQuest1);
 
-        assertEquals(javaQuest1, out.add(javaQuest1));
+        assertEquals(javaQuest1, out.add(javaQuestion1, javaAnswer1));
         verify(repositoryMock, times(1)).add(javaQuest1);
 
     }
@@ -44,8 +38,8 @@ class JavaQuestionServiceTest {
     @Test
     void testAddQuestionAnswer_QuestionAlreadyAdded_ThrowsQuestionAlreadyAddedException() {
 
-        String javaQuestion11 = "Вопрос 1";
-        String javaAnswer11 = "Ответ 1";
+        String javaQuestion11 = "Вопрос 11";
+        String javaAnswer11 = "Ответ 11";
         // отсутствующий объект
 
         when(repositoryMock.add(any()))
@@ -70,7 +64,7 @@ class JavaQuestionServiceTest {
     @Test
     void testAddQuestion_QuestionAlreadyAdded_ThrowsQuestionAlreadyAddedException() {
 
-        Question javaQuest11 = new Question("Вопрос 1", "Ответ 1");
+        Question javaQuest11 = new Question("Вопрос 11", "Ответ 11");
         // отсутствующий объект
 
         when(repositoryMock.add(any()))
@@ -95,7 +89,7 @@ class JavaQuestionServiceTest {
     @Test
     void  testRemoveQuestion_QuestionNotFound_ThrowsQuestionNotFoundException() {
 
-        Question javaQuest11 = new Question("Вопрос 1", "Ответ 1");
+        Question javaQuest11 = new Question("Вопрос 11", "Ответ 11");
         // отсутствующий объект
 
         when(repositoryMock.remove(any()))
@@ -112,17 +106,15 @@ class JavaQuestionServiceTest {
 
         when(repositoryMock.getAll())
                 .thenReturn(ALL_JAVA_QUESTIONS);
+
         assertIterableEquals(ALL_JAVA_QUESTIONS, out.getAll());             // Сравнивает две коллекции
+//        assertEquals(ALL_JAVA_QUESTIONS, out.getAll());                   // Сравнивает два объекта
+                                                                            // можно использовать первый или второй
 
-//        when(repositoryMock.getAll().size())
-//                .thenReturn(5);
-//        assertEquals(5, out.getAll().size());
-
-        assertEquals(ALL_JAVA_QUESTIONS, out.getAll());                     // Сравнивает два объекта
         assertEquals(ALL_JAVA_QUESTIONS.size(), out.getAll().size());
-        assertNotNull(out.getAll());
-        assertTrue(out.getAll().containsAll(ALL_JAVA_QUESTIONS));
-        verify(repositoryMock, times(5)).getAll();  // Вызывается 5 раз
+//        assertNotNull(out.getAll());
+//        assertTrue(out.getAll().containsAll(ALL_JAVA_QUESTIONS));
+        verify(repositoryMock, times(2)).getAll();  // Вызывается 2 раза
 
     }
 

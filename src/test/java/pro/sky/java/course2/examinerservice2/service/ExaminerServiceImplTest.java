@@ -26,15 +26,15 @@ class ExaminerServiceImplTest {
     @Test
     public void testGetQuestionsByAmount_AmountEqualsSize_Success() {
         // данный тест проверяет работу метода, когда amount == size
-        int amount = 10;
+        int amount = 5;
 
         when(serviceMock.getAll())
-                .thenReturn(ALL_JAVA_QUESTIONS);
+                .thenReturn(ALL_MATH_QUESTIONS);
 
         Collection<Question> actual = out.getQuestions(amount);
 
         assertEquals(amount, actual.size());
-        assertEquals(ALL_JAVA_QUESTIONS, actual);
+        assertEquals(ALL_MATH_QUESTIONS, actual);
         verify(serviceMock, times(2)).getAll();       // Вызывается 2 раза
 
     }
